@@ -3,6 +3,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 
+# apply_centroid function to get the image centroid features 
 def apply_centroid(img):
     feature_vector = []
     Xc = 0
@@ -22,7 +23,7 @@ def apply_centroid(img):
     feature_vector.append((Xc, Yc))
     return feature_vector
 
-
+# split_image to divide the image into equal parts 
 def split_image(img, rows, columns):
     x, y = img.shape
     return (img.reshape(y // rows, rows, -1, columns)
@@ -63,9 +64,11 @@ def main():
     test_features = np.array(test_features)
     train_features = train_features.reshape(60000, 32)
     test_features = test_features.reshape(10000, 32)
-
+# Applying knn model to classify the data
     knn_model = KNeighborsClassifier(n_neighbors=5, metric='euclidean')
+    # Train
     knn_model.fit(train_features, train_labels)
+    # Test
     knn_prediction = knn_model.predict(test_features)
     print("Accuracy = ", accuracy_score(test_labels, knn_prediction) * 100, "%")
 
